@@ -565,7 +565,7 @@ const Dashboard = () => {
 
         <div className="absolute -left-20 bottom-0 h-64 w-64 rounded-full bg-indigo-500/10 blur-3xl" />
 
-        <div className="relative mx-auto max-w-7xl px-5 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <div className="relative mx-auto max-w-7xl px-5 py-10 sm:px-6 lg:px-8 lg:py-8">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-blue-300 backdrop-blur">
@@ -967,7 +967,7 @@ const Dashboard = () => {
 
                   <tbody className="divide-y divide-slate-100">
                     {bookings.map((booking) => {
-                      const status =
+
                         booking.status?.toLowerCase();
 
                       const isUpdating =

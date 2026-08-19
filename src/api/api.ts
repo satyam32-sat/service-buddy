@@ -1,7 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL:
+    "https://service-buddy-backend-3gxhrnu1r-pandeysatyam346-6422s-projects.vercel.app/api",
   headers: {
     "Content-Type": "application/json",
   },
@@ -19,11 +20,7 @@ api.interceptors.request.use(
           config.headers.Authorization = `Bearer ${user.token}`;
         }
       } catch (error) {
-        console.error(
-          "Invalid saved user data:",
-          error
-        );
-
+        console.error("Invalid saved user data:", error);
         localStorage.removeItem("servicebuddy-user");
       }
     }

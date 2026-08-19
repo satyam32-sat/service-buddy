@@ -1,12 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-
 import MainLayout from "../layouts/MainLayout";
 import ClientLayout from "../layouts/ClientLayout";
 import ProviderLayout from "../layouts/ProviderLayout";
 import AdminLayout from "../layouts/AdminLayout";
-
 import ProtectedRoute from "../components/auth/ProtectedRoute";
-
 import Home from "../pages/Home";
 import Services from "../pages/Services";
 import ServiceDetails from "../pages/ServiceDetails";
@@ -19,12 +16,9 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
 import BookingDetails from "../pages/BookingDetails";
-
 import ClientDashboard from "../pages/client/Dashboard";
-
 import ProviderDashboard from "../pages/provider/Dashboard";
 import ProviderBookingDetails from "../pages/provider/BookingDetails";
-
 import Dashboard from "../pages/admin/Dashboard";
 import Users from "../pages/admin/Users";
 import Providers from "../pages/admin/Providers";

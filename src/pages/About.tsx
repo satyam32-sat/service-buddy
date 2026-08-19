@@ -131,7 +131,7 @@ const About = () => {
 
       {/* ================= MISSION ================= */}
 
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+      <section className="mx-auto max-w-7xl px-6 py-5 lg:py-24">
 
         <div className="grid items-center gap-12 lg:grid-cols-2">
 
@@ -330,7 +330,7 @@ const About = () => {
 
         <div className="mx-auto max-w-7xl px-6">
 
-          <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
+          <div className="grid  lg:grid-cols-[0.8fr_1.2fr]">
 
             {/* Heading */}
             <div>

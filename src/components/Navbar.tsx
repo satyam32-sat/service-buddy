@@ -1,16 +1,31 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import {
+  ChevronDown,
+  LayoutDashboard,
+  LogIn,
+  LogOut,
+  Menu,
+  User,
+  X,
+  House,
+  BriefcaseBusiness,
+  Info,
+  Mail,
+} from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 
 const navLinks = [
-  { name: "Home", path: "/" },
-  { name: "Services", path: "/services" },
-  { name: "About", path: "/about" },
-  { name: "Contact", path: "/contact" },
+  { name: "Home", path: "/", icon: House },
+  { name: "Services", path: "/services", icon: BriefcaseBusiness },
+  { name: "About", path: "/about", icon: Info },
+  { name: "Contact", path: "/contact", icon: Mail },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
+
   const { user, logout } = useAuth();
 
   const dashboardPath =
@@ -22,112 +37,158 @@ const Navbar = () => {
           ? "/admin/dashboard"
           : "/";
 
-  return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
-
-        {/* Logo */}
-        <NavLink
-          to="/"
-          onClick={() => setOpen(false)}
-          className="group flex items-center gap-3 transition duration-300 hover:scale-[1.02]"
-        >
-          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-xl font-extrabold text-white shadow-lg">
-            SB
-          </div>
-
-          <div>
-            <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">
-              Service-Buddy
-            </h1>
-
-            <p className="text-xs uppercase tracking-[0.2em] text-gray-500">
-
-            </p>
-          </div>
-        </NavLink>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden items-center gap-8 md:flex">
-          {navLinks.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) =>
-                `relative pb-1 text-sm font-medium transition duration-300 ${
-                  isActive
-                    ? "text-blue-600"
-                    : "text-gray-700 hover:text-blue-600"
-                }`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  {item.name}
-
-                  <span
-                    className={`absolute bottom-0 left-0 h-[2px] rounded-full bg-blue-600 transition-all duration-300 ${
-                      isActive ? "w-full" : "w-0"
-                    }`}
-                  />
-                </>
-              )}
-            </NavLink>
-          ))}
-        </nav>
-
-        {/* Desktop Buttons */}
-        <div className="hidden items-center gap-3 md:flex">
-          {!user ? (
-            <>
-              <NavLink
-                to="/login"
-                className="rounded-xl border border-blue-600 px-5 py-2.5 font-medium text-blue-600 transition duration-300 hover:bg-blue-50"
-              >
-                Login
-              </NavLink>
-
-              <NavLink
-                to="/register"
-                className="rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-2.5 font-medium text-white shadow-md transition duration-300 hover:-translate-y-0.5 hover:shadow-xl"
-              >
-                Get Started
-              </NavLink>
-            </>
-          ) : (
-            <>
-              {/* Profile */}
-     <NavLink
-  to="/profile"
-  className="group flex items-center gap-3 rounded-2xl border border-gray-200 bg-white px-4 py-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-50 hover:shadow-md"
->
-  {/* Avatar */}
-  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-sm font-bold text-white shadow-sm">
-    {user?.name
+  const initials =
+    user?.name
       ?.split(" ")
       .map((name) => name[0])
       .join("")
       .slice(0, 2)
-      .toUpperCase() || "U"}
-  </div>
+      .toUpperCase() || "U";
 
-  {/* User Info */}
-  <div className="hidden text-left sm:block">
-    <p className="text-sm font-bold leading-tight text-gray-900 group-hover:text-blue-600">
-      {user?.name || "User"}
-    </p>
+  const closeMenus = () => {
+    setOpen(false);
+    setProfileOpen(false);
+  };
 
-    <p className="mt-0.5 text-xs capitalize text-gray-500">
-      {user?.role || "Account"}
-    </p>
-  </div>
-</NavLink>
+  return (
+    <header className="sticky top-0 z-50 w-full border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
 
-              {/* Dashboard */}
+        {/* Logo */}
+        <NavLink
+          to="/"
+          onClick={closeMenus}
+          className="group flex items-center gap-3"
+        >
+          <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-blue-600 via-blue-600 to-cyan-500 text-sm font-black text-white shadow-lg shadow-blue-500/20 transition-all duration-300 group-hover:scale-105 group-hover:shadow-blue-500/30">
+            SB
+          </div>
+
+          <div className="hidden sm:block">
+            <h1 className="text-[20px] font-extrabold tracking-tight text-slate-900">
+              Service<span className="text-blue-600">Buddy</span>
+            </h1>
+            <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-slate-400">
+              Services made simple
+            </p>
+          </div>
+        </NavLink>
+
+       {navLinks.map((item) => {
+  const Icon = item.icon;
+
+  return (
+    <NavLink
+      key={item.path}
+      to={item.path}
+      className={({ isActive }) =>
+        `flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${
+          isActive
+            ? "bg-blue-50 text-blue-600"
+            : "text-slate-600 hover:bg-slate-50 hover:text-blue-600"
+        }`
+      }
+    >
+<Icon
+  size={17}
+  strokeWidth={2}
+  className="transition-transform duration-200 group-hover:scale-110"
+/>
+      {item.name}
+    </NavLink>
+  );
+})}
+{/* Desktop Actions */}
+<div className="hidden items-center gap-3 md:flex">
+  {!user ? (
+    <>
+      <NavLink
+        to="/login"
+        className="flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-200 hover:bg-indigo-50 hover:text-indigo-600"
+      >
+        <LogIn size={17} />
+        Login
+      </NavLink>
+
+      <NavLink
+        to="/register"
+        className="rounded-xl bg-gradient-to-r from-indigo-600 via-violet-600 to-purple-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-indigo-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-violet-500/30"
+      >
+        Get Started
+      </NavLink>
+    </>
+  ) : (
+    <>
+              {/* Profile */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setProfileOpen((prev) => !prev)}
+                  className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 transition-all hover:border-blue-200 hover:bg-blue-50/50"
+                >
+                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-xs font-bold text-white shadow-sm">
+                    {initials}
+                  </div>
+
+                  <div className="hidden text-left lg:block">
+                    <p className="max-w-[110px] truncate text-sm font-bold text-slate-900">
+                      {user?.name || "User"}
+                    </p>
+                    <p className="text-[11px] capitalize text-slate-500">
+                      {user?.role || "Account"}
+                    </p>
+                  </div>
+
+                  <ChevronDown
+                    size={15}
+                    className={`text-slate-400 transition-transform ${
+                      profileOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
+
+                {profileOpen && (
+                  <div className="absolute right-0 top-14 w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-xl shadow-slate-900/10">
+                    <NavLink
+                      to="/profile"
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-blue-600"
+                    >
+                      <User size={17} />
+                      Profile
+                    </NavLink>
+
+                    <NavLink
+                      to={dashboardPath}
+                      onClick={() => setProfileOpen(false)}
+                      className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-blue-50 hover:text-blue-600"
+                    >
+                      <LayoutDashboard size={17} />
+                      Dashboard
+                    </NavLink>
+
+                    <div className="my-1 border-t border-slate-100" />
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        logout();
+                        setProfileOpen(false);
+                      }}
+                      className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-600 transition hover:bg-red-50"
+                    >
+                      <LogOut size={17} />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+
               <NavLink
                 to={dashboardPath}
-                className="rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-2.5 font-medium text-white shadow-md transition hover:-translate-y-0.5 hover:shadow-xl"
+                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
               >
+                <LayoutDashboard size={17} />
                 Dashboard
               </NavLink>
             </>
@@ -136,34 +197,33 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          onClick={() => setOpen(!open)}
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-gray-300 text-2xl text-gray-700 transition hover:bg-gray-100 md:hidden"
-          aria-label="Toggle menu"
+          type="button"
+          onClick={() => setOpen((prev) => !prev)}
+          className="flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-600 md:hidden"
+          aria-label="Toggle navigation"
+          aria-expanded={open}
         >
-          {open ? "✕" : "☰"}
+          {open ? <X size={21} /> : <Menu size={21} />}
         </button>
       </div>
 
       {/* Mobile Menu */}
       <div
-        className={`overflow-hidden bg-white transition-all duration-300 md:hidden ${
-          open
-            ? "max-h-[500px] border-t border-gray-200"
-            : "max-h-0"
+        className={`overflow-hidden border-t border-slate-100 bg-white transition-all duration-300 md:hidden ${
+          open ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="space-y-2 p-5">
-
+        <div className="space-y-2 px-4 py-4 sm:px-6">
           {navLinks.map((item) => (
             <NavLink
               key={item.path}
               to={item.path}
-              onClick={() => setOpen(false)}
+              onClick={closeMenus}
               className={({ isActive }) =>
-                `block rounded-lg px-4 py-3 font-medium transition ${
+                `block rounded-xl px-4 py-3 text-sm font-semibold transition ${
                   isActive
                     ? "bg-blue-50 text-blue-600"
-                    : "text-gray-700 hover:bg-gray-100"
+                    : "text-slate-700 hover:bg-slate-50 hover:text-blue-600"
                 }`
               }
             >
@@ -171,49 +231,71 @@ const Navbar = () => {
             </NavLink>
           ))}
 
+          <div className="my-3 border-t border-slate-100" />
+
           {!user ? (
-            <>
+            <div className="grid grid-cols-2 gap-2">
               <NavLink
                 to="/login"
-                onClick={() => setOpen(false)}
-                className="block rounded-xl border border-blue-600 px-4 py-3 text-center font-medium text-blue-600 transition hover:bg-blue-50"
+                onClick={closeMenus}
+                className="flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
               >
+                <LogIn size={17} />
                 Login
               </NavLink>
 
               <NavLink
                 to="/register"
-                onClick={() => setOpen(false)}
-                className="block rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-3 text-center font-medium text-white shadow-md transition hover:shadow-lg"
+                onClick={closeMenus}
+                className="rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-3 text-center text-sm font-bold text-white shadow-md"
               >
                 Get Started
               </NavLink>
-            </>
+            </div>
           ) : (
             <>
+              <div className="flex items-center gap-3 rounded-2xl bg-slate-50 p-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 text-sm font-bold text-white">
+                  {initials}
+                </div>
+
+                <div>
+                  <p className="text-sm font-bold text-slate-900">
+                    {user?.name || "User"}
+                  </p>
+                  <p className="text-xs capitalize text-slate-500">
+                    {user?.role || "Account"}
+                  </p>
+                </div>
+              </div>
+
               <NavLink
                 to="/profile"
-                onClick={() => setOpen(false)}
-                className="block rounded-xl border border-gray-200 px-4 py-3 text-center font-medium text-gray-700 transition hover:bg-gray-50"
+                onClick={closeMenus}
+                className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50"
               >
+                <User size={18} />
                 Profile
               </NavLink>
 
               <NavLink
                 to={dashboardPath}
-                onClick={() => setOpen(false)}
-                className="block rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-3 text-center font-medium text-white shadow-md transition hover:shadow-lg"
+                onClick={closeMenus}
+                className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-3 text-sm font-bold text-white shadow-md"
               >
+                <LayoutDashboard size={18} />
                 Dashboard
               </NavLink>
 
               <button
+                type="button"
                 onClick={() => {
                   logout();
-                  setOpen(false);
+                  closeMenus();
                 }}
-                className="block w-full rounded-xl border border-red-200 px-4 py-3 text-center font-medium text-red-600 transition hover:bg-red-50"
+                className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-200 px-4 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50"
               >
+                <LogOut size={18} />
                 Logout
               </button>
             </>

@@ -102,7 +102,7 @@ const ServiceDetails = () => {
     );
   }
 
-  const canBook =
+
     service.isAvailable && user?.role === "client";
 
   return (

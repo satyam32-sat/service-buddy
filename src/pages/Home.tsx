@@ -1,6 +1,23 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  BriefcaseBusiness,
+  CheckCircle2,
+  ChevronDown,
+  Clock3,
+  IndianRupee,
+  Mail,
+  MapPin,
+  ShieldCheck,
+  Star,
+  Users,
+  Wrench,
+  Zap,
+} from "lucide-react";
+
 import api from "../api/api";
+import logo from "../assets/logo.png";
 
 interface Service {
   _id: string;
@@ -53,17 +70,57 @@ const faqs = [
   },
 ];
 
+const features = [
+  {
+    icon: ShieldCheck,
+    title: "Verified Professionals",
+    desc: "Trusted professionals for your everyday home service needs.",
+  },
+  {
+    icon: Clock3,
+    title: "Fast Booking",
+    desc: "Find and book the service you need in just a few clicks.",
+  },
+  {
+    icon: IndianRupee,
+    title: "Clear Pricing",
+    desc: "Transparent service pricing without unnecessary surprises.",
+  },
+  {
+    icon: Users,
+    title: "Customer Support",
+    desc: "We're here to help whenever you need assistance.",
+  },
+];
+
+const stats = [
+  {
+    stat: "1K+",
+    label: "Happy Customers",
+    icon: Users,
+  },
+  {
+    stat: "50+",
+    label: "Verified Pros",
+    icon: ShieldCheck,
+  },
+  {
+    stat: "2K+",
+    label: "Tasks Done",
+    icon: CheckCircle2,
+  },
+  {
+    stat: "4.4★",
+    label: "Average Rating",
+    icon: Star,
+  },
+];
+
 const Home = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [loadingServices, setLoadingServices] = useState(true);
   const [serviceError, setServiceError] = useState("");
-
-  const [openFaqIndex, setOpenFaqIndex] =
-    useState<number | null>(null);
-
-  // ============================
-  // FETCH SERVICES FROM MONGODB
-  // ============================
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -91,216 +148,367 @@ const Home = () => {
   }, []);
 
   const toggleFaq = (index: number) => {
-    setOpenFaqIndex(
-      openFaqIndex === index ? null : index
+    setOpenFaqIndex((current) =>
+      current === index ? null : index
     );
   };
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#020713] text-white">
+    <main className="min-h-screen overflow-hidden bg-slate-950 text-white">
 
-      {/* ================= HERO ================= */}
+      {/* =========================================================
+          HERO
+      ========================================================= */}
+      <section className="relative overflow-hidden border-b border-white/10 bg-[#020617]">
 
-      <section className="relative overflow-hidden border-b border-blue-500/20 bg-[#020713]">
+        {/* Background Glow */}
+        <div className="pointer-events-none absolute -left-48 top-0 h-[500px] w-[500px] rounded-full bg-fuchsia-500/20 blur-[120px]" />
 
-        <div className="absolute -left-40 top-20 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl" />
+        <div className="pointer-events-none absolute -right-48 top-0 h-[500px] w-[500px] rounded-full bg-indigo-500/20 blur-[120px]" />
 
-        <div className="absolute -right-40 top-0 h-96 w-96 rounded-full bg-cyan-500/10 blur-3xl" />
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-500/10 blur-[120px]" />
 
-        <div className="relative mx-auto flex max-w-7xl flex-col items-center justify-between gap-14 px-6 py-20 lg:flex-row lg:py-28">
+        {/* Grid */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px)",
+            backgroundSize: "55px 55px",
+          }}
+        />
+
+        <div className="relative mx-auto flex max-w-7xl flex-col items-center gap-14 px-5 py-16 sm:px-6 lg:flex-row lg:gap-16 lg:px-8 lg:py-24">
 
           {/* Hero Content */}
+          <div className="w-full max-w-2xl text-center lg:w-1/2 lg:text-left">
 
-          <div className="max-w-2xl text-center lg:text-left">
+            {/* Brand */}
+            <div className="mb-7 flex justify-center lg:justify-start">
+              <div className="group flex items-center gap-3">
+                <div className="relative">
+                  <div className="absolute -inset-2 rounded-2xl bg-gradient-to-r from-fuchsia-500 to-indigo-500 opacity-20 blur-lg transition-opacity group-hover:opacity-40" />
 
-            <span className="inline-flex rounded-full border border-blue-500/30 bg-blue-500/10 px-5 py-2 text-sm font-semibold text-blue-400">
+                  <div className="relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-1.5 shadow-xl backdrop-blur">
+                   
+                  </div>
+                </div>
+
+                <div className="text-left">
+                  <p className="text-lg font-black tracking-tight text-white">
+                    
+                    <span className="text-indigo-400"></span>
+                  </p>
+
+                  <p className="text-[9px] font-semibold uppercase tracking-[0.2em] text-slate-500">
+                    Trusted Services
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Badge */}
+            <span className="inline-flex items-center gap-2 rounded-full border border-fuchsia-400/20 bg-fuchsia-500/10 px-4 py-2 text-sm font-semibold text-fuchsia-300 shadow-lg shadow-fuchsia-500/5">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-fuchsia-400 opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-fuchsia-400" />
+              </span>
+
               Trusted Home Services
             </span>
 
-            <h1 className="mt-7 text-4xl font-extrabold leading-tight tracking-tight sm:text-5xl lg:text-6xl">
+            {/* Heading */}
+            <h1 className="mt-7 text-4xl font-black leading-[1.02] tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
               Book Trusted
+              <span className="block">Home Services</span>
 
-              <span className="block">
-                Home Services
-              </span>
-
-              <span className="mt-2 block bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="mt-3 block bg-gradient-to-r from-fuchsia-400 via-violet-400 to-indigo-400 bg-clip-text text-transparent">
                 Anytime, Anywhere
               </span>
             </h1>
 
-            <p className="mt-6 max-w-xl text-lg leading-8 text-gray-400 sm:text-xl">
-              Find verified electricians, plumbers,
-              carpenters, cleaners, painters, AC technicians,
-              and more — all in one place.
+            {/* Description */}
+            <p className="mt-6 max-w-xl text-base leading-7 text-slate-400 sm:text-lg lg:text-xl">
+              Find verified electricians, plumbers, carpenters,
+              cleaners, painters, AC technicians, and more — all
+              in one powerful platform.
             </p>
 
-            <div className="mt-9 flex flex-wrap justify-center gap-4 lg:justify-start">
+            {/* Buttons */}
+            <div className="mt-8 flex flex-wrap justify-center gap-3 lg:justify-start">
 
               <Link
                 to="/services"
-                className="rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-8 py-4 font-bold text-white shadow-lg shadow-blue-600/20 transition hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-600/30"
+                className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-fuchsia-500 via-violet-500 to-indigo-500 px-6 py-3.5 text-sm font-bold text-white shadow-xl shadow-violet-500/20 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-fuchsia-500/20 sm:px-7"
               >
-                Explore Services →
+                Explore Services
+
+                <ArrowRight
+                  size={17}
+                  className="transition-transform duration-200 group-hover:translate-x-1"
+                />
               </Link>
 
               <Link
                 to="/register"
-                className="rounded-xl border border-white/10 bg-white/5 px-8 py-4 font-bold text-gray-200 transition hover:border-blue-500/40 hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-6 py-3.5 text-sm font-bold text-slate-200 backdrop-blur transition-all duration-300 hover:border-fuchsia-400/30 hover:bg-white/[0.08] sm:px-7"
               >
                 Get Started
               </Link>
-
             </div>
 
-            <div className="mt-8 flex flex-wrap justify-center gap-5 text-sm text-gray-500 lg:justify-start">
-              <span>✓ Verified Professionals</span>
-              <span>✓ Transparent Pricing</span>
-              <span>✓ Easy Booking</span>
-            </div>
+            {/* Trust Points */}
+            <div className="mt-7 flex flex-wrap justify-center gap-x-5 gap-y-3 text-xs font-medium text-slate-500 lg:justify-start">
 
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2
+                  size={14}
+                  className="text-emerald-400"
+                />
+                Verified Professionals
+              </span>
+
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2
+                  size={14}
+                  className="text-emerald-400"
+                />
+                Transparent Pricing
+              </span>
+
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2
+                  size={14}
+                  className="text-emerald-400"
+                />
+                Easy Booking
+              </span>
+            </div>
           </div>
 
-          {/* Hero Image */}
-
+          {/* Hero Visual */}
           <div className="relative w-full max-w-xl lg:w-1/2">
 
-            <div className="absolute -inset-1 rounded-[2rem] bg-gradient-to-r from-blue-600 to-cyan-500 opacity-50 blur-xl" />
+            <div className="absolute -inset-5 rounded-[2.5rem] bg-gradient-to-r from-fuchsia-500/30 via-violet-500/20 to-indigo-500/30 blur-3xl" />
 
-            <div className="relative overflow-hidden rounded-[2rem] border border-blue-500/30 bg-[#0b0f19] p-2 shadow-2xl">
+            <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-2 shadow-2xl backdrop-blur-xl">
 
               <img
-                src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=85"
+src="https://i.pinimg.com/736x/51/fd/4e/51fd4eeb60bed66298bebca559619221.jpg"
                 alt="Professional home service"
-                className="h-[420px] w-full rounded-[1.5rem] object-cover"
+                className="h-[360px] w-full rounded-[1.6rem] object-cover object-center transition duration-700 hover:scale-[1.03] sm:h-[440px]"
                 loading="eager"
               />
 
-              <div className="absolute bottom-7 left-7 right-7 rounded-2xl border border-white/10 bg-[#070b15]/90 p-5 shadow-2xl backdrop-blur-md">
+              {/* Overlay */}
+              <div className="absolute inset-2 rounded-[1.6rem] bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
 
-                <div className="flex items-center justify-between">
+              {/* Floating Rating */}
+              <div className="absolute right-7 top-7 flex items-center gap-2 rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 shadow-2xl backdrop-blur-xl">
+                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-yellow-400/10">
+                  <Star
+                    size={17}
+                    className="fill-yellow-400 text-yellow-400"
+                  />
+                </div>
 
-                  <div>
-                    <p className="text-sm text-gray-400">
-                      Trusted Service
-                    </p>
+                <div>
+                  <p className="text-sm font-black text-white">
+                    4.4/5
+                  </p>
+                  <p className="text-[10px] text-slate-400">
+                    Customer Rating
+                  </p>
+                </div>
+              </div>
 
-                    <p className="mt-1 font-bold text-white">
-                      Professional & Reliable
-                    </p>
+              {/* Floating Verified Card */}
+              <div className="absolute bottom-7 left-7 right-7 rounded-2xl border border-white/10 bg-slate-950/85 p-4 shadow-2xl backdrop-blur-xl">
+
+                <div className="flex items-center justify-between gap-4">
+
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-fuchsia-500/20 to-indigo-500/20 text-fuchsia-300">
+                      <ShieldCheck size={21} />
+                    </div>
+
+                    <div>
+                      <p className="text-xs font-medium text-slate-400">
+                        Verified Professionals
+                      </p>
+
+                      <p className="mt-1 text-sm font-bold text-white sm:text-base">
+                        Quality Service at Your Doorstep
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="rounded-xl bg-blue-600 px-4 py-2 font-bold">
-                    ★ 4.4
+                  <div className="hidden h-8 w-8 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-400 sm:flex">
+                    <CheckCircle2 size={17} />
                   </div>
 
                 </div>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       </section>
 
-      {/* ================= SERVICES ================= */}
+      {/* =========================================================
+          STATS
+      ========================================================= */}
+      <section className="relative overflow-hidden border-b border-white/10 bg-gradient-to-r from-fuchsia-500 via-violet-500 to-indigo-500 px-5 py-12 sm:px-6 lg:px-8">
 
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+        <div className="absolute -left-20 top-0 h-60 w-60 rounded-full bg-fuchsia-300/30 blur-3xl" />
 
-        <div className="text-center">
+        <div className="absolute -right-20 bottom-0 h-60 w-60 rounded-full bg-blue-300/30 blur-3xl" />
 
-          <p className="text-sm font-bold uppercase tracking-[0.25em] text-blue-400">
-            Our Services
-          </p>
+        <div className="relative mx-auto grid max-w-7xl grid-cols-2 gap-4 md:grid-cols-4">
 
-          <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl lg:text-5xl">
-            Popular Home Services
-          </h2>
+          {stats.map((item) => {
+            const Icon = item.icon;
 
-          <p className="mx-auto mt-5 max-w-2xl text-lg text-gray-400">
-            Choose from our most requested professional
-            home services and get your work done with confidence.
-          </p>
-
-        </div>
-
-        {/* ================= SERVICE LOADING ================= */}
-
-        {loadingServices && (
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-
+            return (
               <div
-                key={item}
-                className="overflow-hidden rounded-3xl border border-white/10 bg-[#0b0f19]"
+                key={item.label}
+                className="group rounded-2xl border border-white/15 bg-white/10 p-5 text-center backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:bg-white/15"
               >
-
-                <div className="h-52 animate-pulse bg-white/5" />
-
-                <div className="space-y-4 p-7">
-
-                  <div className="h-7 w-2/3 animate-pulse rounded bg-white/5" />
-
-                  <div className="h-4 w-full animate-pulse rounded bg-white/5" />
-
-                  <div className="h-4 w-4/5 animate-pulse rounded bg-white/5" />
-
-                  <div className="h-12 w-full animate-pulse rounded-xl bg-white/5" />
-
+                <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-xl bg-white/15 text-white">
+                  <Icon
+                    size={18}
+                    className={
+                      item.label === "Average Rating"
+                        ? "fill-white"
+                        : ""
+                    }
+                  />
                 </div>
 
+                <h2 className="mt-3 text-2xl font-black text-white sm:text-3xl">
+                  {item.stat}
+                </h2>
+
+                <p className="mt-1 text-[10px] font-bold uppercase tracking-wider text-white/70 sm:text-xs">
+                  {item.label}
+                </p>
               </div>
+            );
+          })}
+        </div>
+      </section>
 
-            ))}
+      {/* =========================================================
+          SERVICES
+      ========================================================= */}
+      <section className="relative overflow-hidden bg-slate-950 px-5 py-20 sm:px-6 lg:px-8 lg:py-24">
 
-          </div>
-        )}
+        <div className="pointer-events-none absolute left-1/2 top-0 h-80 w-80 -translate-x-1/2 rounded-full bg-violet-500/10 blur-[110px]" />
 
-        {/* ================= SERVICE ERROR ================= */}
+        <div className="pointer-events-none absolute -right-40 top-1/3 h-80 w-80 rounded-full bg-fuchsia-500/10 blur-[110px]" />
 
-        {!loadingServices && serviceError && (
+        <div className="relative mx-auto max-w-7xl">
 
-          <div className="mx-auto mt-14 max-w-xl rounded-2xl border border-red-500/20 bg-red-500/10 p-6 text-center">
+          {/* Header */}
+          <div className="mx-auto max-w-3xl text-center">
 
-            <p className="font-semibold text-red-400">
-              {serviceError}
+            <div className="mb-6 flex justify-center">
+              <div className="relative rounded-2xl border border-white/10 bg-white/[0.04] p-3 shadow-xl shadow-violet-500/5 backdrop-blur-md">
+
+                <div className="absolute -inset-2 rounded-2xl bg-gradient-to-r from-fuchsia-500/20 to-indigo-500/20 blur-xl" />
+
+                <img
+                  src={logo}
+                  alt="Service Buddy"
+                  className="relative h-12 w-auto object-contain sm:h-14"
+                />
+              </div>
+            </div>
+
+            <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-400/20 bg-fuchsia-500/10 px-4 py-2">
+
+              <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-400 shadow-[0_0_10px_rgba(244,63,244,0.8)]" />
+
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-fuchsia-300">
+                Our Services
+              </span>
+            </div>
+
+            <h2 className="mt-5 text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+              Everything Your Home Needs,
+
+              <span className="block bg-gradient-to-r from-fuchsia-400 via-violet-400 to-indigo-400 bg-clip-text text-transparent">
+                In One Place
+              </span>
+            </h2>
+
+            <p className="mx-auto mt-5 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base sm:leading-8">
+              Choose from trusted professionals for your everyday
+              home service needs. Simple booking, transparent
+              pricing, and reliable service.
             </p>
-
-            <button
-              type="button"
-              onClick={() => window.location.reload()}
-              className="mt-4 rounded-xl bg-red-500 px-5 py-2.5 font-semibold text-white transition hover:bg-red-600"
-            >
-              Try Again
-            </button>
-
           </div>
 
-        )}
-
-        {/* ================= SERVICES FROM MONGODB ================= */}
-
-        {!loadingServices &&
-          !serviceError &&
-          services.length > 0 && (
-
+          {/* Loading */}
+          {loadingServices && (
             <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-              {services.slice(0, 6).map((service) => (
-
+              {[1, 2, 3, 4, 5, 6].map((item) => (
                 <div
-                  key={service._id}
-                  className="group flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-[#0b0f19] shadow-xl transition duration-300 hover:-translate-y-2 hover:border-blue-500/40 hover:bg-[#101522] hover:shadow-blue-500/10"
+                  key={item}
+                  className="overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03]"
                 >
+                  <div className="h-56 animate-pulse bg-white/5" />
 
-                  <div>
+                  <div className="space-y-4 p-6">
+                    <div className="h-6 w-2/3 animate-pulse rounded-lg bg-white/5" />
+                    <div className="h-4 w-full animate-pulse rounded bg-white/5" />
+                    <div className="h-4 w-4/5 animate-pulse rounded bg-white/5" />
+                    <div className="h-11 w-full animate-pulse rounded-xl bg-white/5" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
 
-                    {/* Service Image */}
+          {/* Error */}
+          {!loadingServices && serviceError && (
+            <div className="mx-auto mt-14 max-w-xl rounded-3xl border border-red-500/20 bg-red-500/5 p-8 text-center">
 
+              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-red-500/10 text-red-400">
+                <Wrench size={24} />
+              </div>
+
+              <h3 className="mt-4 text-lg font-bold text-white">
+                Unable to Load Services
+              </h3>
+
+              <p className="mt-2 text-sm text-slate-400">
+                {serviceError}
+              </p>
+
+              <button
+                type="button"
+                onClick={() => window.location.reload()}
+                className="mt-5 rounded-xl bg-gradient-to-r from-fuchsia-500 to-violet-500 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-fuchsia-500/10 transition hover:-translate-y-0.5"
+              >
+                Try Again
+              </button>
+            </div>
+          )}
+
+          {/* Services */}
+          {!loadingServices &&
+            !serviceError &&
+            services.length > 0 && (
+              <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+                {services.slice(0, 6).map((service) => (
+                  <article
+                    key={service._id}
+                    className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] shadow-xl shadow-black/10 transition-all duration-500 hover:-translate-y-2 hover:border-fuchsia-500/30 hover:bg-white/[0.055] hover:shadow-2xl hover:shadow-fuchsia-500/10"
+                  >
+
+                    {/* Image */}
                     <div className="relative overflow-hidden">
 
                       <img
@@ -310,431 +518,417 @@ const Home = () => {
                         }
                         alt={service.title}
                         loading="lazy"
-                        className="h-52 w-full object-cover transition duration-500 group-hover:scale-105"
+                        className="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-105"
                       />
 
-                      <div className="absolute right-4 top-4 rounded-xl border border-white/20 bg-[#070b15]/85 px-4 py-2 text-sm font-bold text-white shadow-lg backdrop-blur-md">
-                        ₹{service.price}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
+
+                      {/* Price */}
+                      <div className="absolute right-4 top-4 flex items-center gap-1 rounded-xl border border-white/10 bg-slate-950/80 px-3 py-2 text-sm font-bold text-white shadow-lg backdrop-blur-md">
+                        <IndianRupee size={14} />
+                        {service.price}
+                      </div>
+
+                      {/* Icon */}
+                      <div className="absolute bottom-4 left-4 flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-slate-950/75 text-fuchsia-300 shadow-lg backdrop-blur-md">
+                        <Wrench size={19} />
                       </div>
 
                     </div>
 
-                    {/* Service Content */}
+                    {/* Content */}
+                    <div className="p-6">
 
-                    <div className="p-7">
+                      <div className="flex items-start justify-between gap-4">
 
-                      <h3 className="text-2xl font-bold text-white">
-                        {service.title}
-                      </h3>
+                        <h3 className="text-xl font-bold tracking-tight text-white">
+                          {service.title}
+                        </h3>
 
-                      <p className="mt-3 leading-7 text-gray-400">
+                        <div className="mt-1 flex shrink-0 items-center gap-1 text-xs font-semibold text-slate-400">
+                          <Star
+                            size={13}
+                            className="fill-yellow-400 text-yellow-400"
+                          />
+                          4.4
+                        </div>
+
+                      </div>
+
+                      <p className="mt-3 line-clamp-2 text-sm leading-6 text-slate-400">
                         {service.description ||
                           `Professional ${service.title.toLowerCase()} service from a trusted Service Buddy provider.`}
                       </p>
 
+                      <div className="my-5 border-t border-white/5" />
+
+                      <Link
+                        to={`/services/${service._id}`}
+                        className="group/button flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-fuchsia-500 via-violet-500 to-indigo-500 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-violet-500/10 transition-all duration-300 hover:from-fuchsia-400 hover:via-violet-500 hover:to-indigo-500 hover:shadow-xl hover:shadow-fuchsia-500/20"
+                      >
+                        View Service
+
+                        <ArrowRight
+                          size={16}
+                          className="transition-transform duration-200 group-hover/button:translate-x-1"
+                        />
+                      </Link>
                     </div>
+                  </article>
+                ))}
+              </div>
+            )}
 
-                  </div>
+          {/* Empty */}
+          {!loadingServices &&
+            !serviceError &&
+            services.length === 0 && (
+              <div className="mx-auto mt-14 max-w-xl rounded-3xl border border-white/10 bg-white/[0.03] p-10 text-center">
 
-                  <div className="px-7 pb-7">
-
-                    <Link
-                      to={`/services/${service._id}`}
-                      className="block rounded-xl border border-white/10 bg-[#171a23] px-5 py-3.5 text-center font-semibold text-blue-400 transition group-hover:border-blue-500 group-hover:bg-blue-600 group-hover:text-white"
-                    >
-                      Book Now →
-                    </Link>
-
-                  </div>
-
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-fuchsia-500/10 text-fuchsia-300">
+                  <BriefcaseBusiness size={28} />
                 </div>
 
-              ))}
+                <h3 className="mt-5 text-xl font-bold text-white">
+                  Services Coming Soon
+                </h3>
 
-            </div>
-
-          )}
-
-        {/* ================= NO SERVICES ================= */}
-
-        {!loadingServices &&
-          !serviceError &&
-          services.length === 0 && (
-
-            <div className="mt-14 rounded-3xl border border-white/10 bg-[#0b0f19] p-10 text-center">
-
-              <div className="text-5xl">
-                🛠️
+                <p className="mt-2 text-sm leading-6 text-slate-400">
+                  We're preparing trusted professionals for you.
+                </p>
               </div>
+            )}
 
-              <h3 className="mt-5 text-2xl font-bold text-white">
-                No Services Available
-              </h3>
+          {/* View All */}
+          {!loadingServices && services.length > 0 && (
+            <div className="mt-12 flex justify-center">
 
-              <p className="mt-3 text-gray-400">
-                Services will appear here once they are added.
-              </p>
+              <Link
+                to="/services"
+                className="group inline-flex items-center gap-2 rounded-xl border border-fuchsia-500/30 bg-fuchsia-500/10 px-6 py-3 text-sm font-bold text-fuchsia-300 transition-all duration-300 hover:border-fuchsia-400 hover:bg-gradient-to-r hover:from-fuchsia-500 hover:to-violet-500 hover:text-white hover:shadow-xl hover:shadow-fuchsia-500/20"
+              >
+                Explore All Services
 
+                <ArrowRight
+                  size={16}
+                  className="transition-transform duration-200 group-hover:translate-x-1"
+                />
+              </Link>
             </div>
-
           )}
-
-        <div className="mt-10 text-center">
-
-          <Link
-            to="/services"
-            className="inline-flex rounded-xl border border-blue-500/30 bg-blue-500/10 px-7 py-3.5 font-semibold text-blue-400 transition hover:bg-blue-600 hover:text-white"
-          >
-            View All Services →
-          </Link>
-
         </div>
-
       </section>
 
-      {/* ================= WHY CHOOSE US ================= */}
+      {/* =========================================================
+          WHY CHOOSE US
+      ========================================================= */}
+      <section className="relative overflow-hidden border-y border-white/5 bg-slate-900/70 px-5 py-20 sm:px-6 lg:px-8 lg:py-24">
 
-      <section className="border-y border-white/5 bg-[#070b15] py-20 lg:py-24">
+        <div className="pointer-events-none absolute left-0 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-fuchsia-500/5 blur-[100px]" />
 
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="pointer-events-none absolute right-0 top-0 h-72 w-72 rounded-full bg-indigo-500/10 blur-[100px]" />
+
+        <div className="relative mx-auto max-w-7xl">
 
           <div className="text-center">
 
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-blue-400">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-fuchsia-400">
               Why Service Buddy
             </p>
 
-            <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-black sm:text-4xl">
               Why Choose Service Buddy?
             </h2>
 
-            <p className="mx-auto mt-5 max-w-2xl text-lg text-gray-400">
-              We make booking trusted home services fast,
-              secure, convenient, and affordable.
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">
+              We make booking trusted home services fast, secure,
+              convenient, and affordable.
             </p>
-
           </div>
 
-          <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
 
-            {[
-              {
-                icon: "✓",
-                title: "Verified Pros",
-                desc: "Trusted professionals for your everyday home service needs.",
-              },
-              {
-                icon: "⚡",
-                title: "Fast Booking",
-                desc: "Find and book the service you need in just a few clicks.",
-              },
-              {
-                icon: "₹",
-                title: "Clear Pricing",
-                desc: "Transparent service pricing without unnecessary surprises.",
-              },
-              {
-                icon: "★",
-                title: "Customer Support",
-                desc: "We're here to help whenever you need assistance.",
-              },
-            ].map((feature) => (
+            {features.map((feature) => {
+              const Icon = feature.icon;
 
-              <div
-                key={feature.title}
-                className="rounded-3xl border border-white/10 bg-[#11141d] p-7 text-center transition hover:-translate-y-1 hover:border-blue-500/30"
-              >
+              return (
+                <div
+                  key={feature.title}
+                  className="group rounded-3xl border border-white/10 bg-white/[0.03] p-6 text-center transition-all duration-300 hover:-translate-y-2 hover:border-fuchsia-500/30 hover:bg-white/[0.05] hover:shadow-xl hover:shadow-fuchsia-500/5"
+                >
 
-                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-500/10 text-3xl font-bold text-blue-400">
-                  {feature.icon}
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-fuchsia-500/10 via-violet-500/10 to-indigo-500/10 text-fuchsia-300 transition-all duration-300 group-hover:scale-110 group-hover:from-fuchsia-500/20 group-hover:to-indigo-500/20">
+                    <Icon size={26} />
+                  </div>
+
+                  <h3 className="mt-5 text-lg font-bold text-white">
+                    {feature.title}
+                  </h3>
+
+                  <p className="mt-2 text-sm leading-6 text-slate-400">
+                    {feature.desc}
+                  </p>
                 </div>
-
-                <h3 className="mt-6 text-xl font-bold">
-                  {feature.title}
-                </h3>
-
-                <p className="mt-3 leading-7 text-gray-400">
-                  {feature.desc}
-                </p>
-
-              </div>
-
-            ))}
-
+              );
+            })}
           </div>
-
         </div>
-
       </section>
 
-      {/* ================= STATS ================= */}
+      {/* =========================================================
+          LOCATION
+      ========================================================= */}
+      <section className="bg-slate-950 px-5 py-20 sm:px-6 lg:px-8 lg:py-24">
 
-      <section className="border-b border-blue-400/20 bg-gradient-to-r from-blue-700 via-blue-600 to-cyan-500 py-16">
-
-        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-10 px-6 text-center md:grid-cols-4">
-
-          {[
-            {
-              stat: "1K+",
-              label: "Happy Customers",
-            },
-            {
-              stat: "50+",
-              label: "Verified Pros",
-            },
-            {
-              stat: "2K+",
-              label: "Tasks Done",
-            },
-            {
-              stat: "4.4★",
-              label: "Average Rating",
-            },
-          ].map((item) => (
-
-            <div key={item.label}>
-
-              <h2 className="text-4xl font-extrabold sm:text-5xl">
-                {item.stat}
-              </h2>
-
-              <p className="mt-2 text-sm font-semibold uppercase tracking-wider text-blue-100">
-                {item.label}
-              </p>
-
-            </div>
-
-          ))}
-
-        </div>
-
-      </section>
-
-      {/* ================= GOOGLE MAP ================= */}
-
-      <section className="bg-[#020713] py-20 lg:py-24">
-
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-7xl">
 
           <div className="mb-10 text-center">
 
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-blue-400">
+            <p className="flex items-center justify-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-fuchsia-400">
+              <MapPin size={15} />
               Find Us
             </p>
 
-            <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-black sm:text-4xl">
               Service Buddy Near You
             </h2>
 
-            <p className="mx-auto mt-5 max-w-2xl text-lg text-gray-400">
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">
               Explore our service area and find trusted professionals
               near your location.
             </p>
-
           </div>
 
-          <div className="overflow-hidden rounded-3xl border border-white/10 bg-[#0b0f19] shadow-2xl">
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-1 shadow-2xl">
+
+            <div className="pointer-events-none absolute -inset-1 rounded-3xl bg-gradient-to-r from-fuchsia-500/10 via-violet-500/10 to-indigo-500/10 blur-xl" />
 
             <iframe
               title="Service Buddy Location"
               src="https://www.google.com/maps?q=Ghaziabad,Uttar+Pradesh,India&output=embed"
               width="100%"
-              height="450"
+              height="400"
               style={{ border: 0 }}
               loading="lazy"
               allowFullScreen
               referrerPolicy="no-referrer-when-downgrade"
+              className="relative rounded-[1.4rem] grayscale-[20%]"
             />
-
           </div>
-
         </div>
-
       </section>
 
-      {/* ================= TESTIMONIALS ================= */}
+      {/* =========================================================
+          TESTIMONIALS
+      ========================================================= */}
+      <section className="bg-slate-950 px-5 py-20 sm:px-6 lg:px-8 lg:py-24">
 
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+        <div className="mx-auto max-w-7xl">
 
-        <div className="text-center">
+          <div className="text-center">
 
-          <p className="text-sm font-bold uppercase tracking-[0.25em] text-blue-400">
-            Customer Stories
-          </p>
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-fuchsia-400">
+              Customer Stories
+            </p>
 
-          <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">
-            What Our Customers Say
-          </h2>
+            <h2 className="mt-3 text-3xl font-black sm:text-4xl">
+              What Our Customers Say
+            </h2>
 
-          <p className="mx-auto mt-5 max-w-2xl text-lg text-gray-400">
-            Trusted by customers who choose Service Buddy
-            for their everyday home service needs.
-          </p>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-400 sm:text-lg">
+              Trusted by customers who choose Service Buddy for
+              their everyday home service needs.
+            </p>
+          </div>
 
-        </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
 
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-
-          {testimonials.map((item) => (
-
-            <div
-              key={item.name}
-              className="flex flex-col justify-between rounded-3xl border border-white/10 bg-[#0b0f19] p-7 shadow-xl transition hover:-translate-y-1 hover:border-blue-500/30"
-            >
-
-              <div>
-
-                <div className="text-lg tracking-widest text-yellow-400">
-                  ★★★★★
-                </div>
-
-                <p className="mt-6 text-lg leading-8 text-gray-300">
-                  "{item.review}"
-                </p>
-
-              </div>
-
-              <div className="mt-8 flex items-center gap-4 border-t border-white/5 pt-6">
-
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-blue-600 to-cyan-500 font-bold text-white">
-                  {item.avatar}
-                </div>
+            {testimonials.map((item) => (
+              <div
+                key={item.name}
+                className="group flex flex-col justify-between rounded-3xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-2 hover:border-fuchsia-500/30 hover:bg-white/[0.05] hover:shadow-xl hover:shadow-fuchsia-500/5"
+              >
 
                 <div>
 
-                  <h3 className="font-bold text-white">
-                    {item.name}
-                  </h3>
+                  <div className="flex gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star
+                        key={star}
+                        size={16}
+                        className="fill-yellow-400 text-yellow-400"
+                      />
+                    ))}
+                  </div>
 
-                  <p className="text-sm text-gray-500">
-                    {item.city}
+                  <p className="mt-5 text-base leading-7 text-slate-300">
+                    "{item.review}"
                   </p>
-
                 </div>
 
+                <div className="mt-7 flex items-center gap-3 border-t border-white/5 pt-5">
+
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-to-br from-fuchsia-500 via-violet-500 to-indigo-500 text-sm font-bold text-white shadow-lg shadow-violet-500/10">
+                    {item.avatar}
+                  </div>
+
+                  <div>
+                    <h3 className="text-sm font-bold text-white">
+                      {item.name}
+                    </h3>
+
+                    <p className="text-xs text-slate-500">
+                      {item.city}
+                    </p>
+                  </div>
+                </div>
               </div>
-
-            </div>
-
-          ))}
-
+            ))}
+          </div>
         </div>
-
       </section>
 
-      {/* ================= CTA ================= */}
+      {/* =========================================================
+          CTA
+      ========================================================= */}
+      <section className="relative overflow-hidden bg-gradient-to-r from-fuchsia-500 via-violet-500 to-indigo-500 px-5 py-20 sm:px-6 lg:px-8">
 
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-blue-600 to-cyan-500 py-20">
+        <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-fuchsia-300/30 blur-3xl" />
 
-        <div className="absolute -right-32 -top-32 h-96 w-96 rounded-full bg-white/10 blur-3xl" />
+        <div className="absolute -bottom-40 -right-20 h-96 w-96 rounded-full bg-blue-300/30 blur-3xl" />
 
-        <div className="absolute -bottom-40 -left-20 h-96 w-96 rounded-full bg-cyan-300/10 blur-3xl" />
+        <div className="relative mx-auto max-w-4xl text-center">
 
-        <div className="relative mx-auto max-w-4xl px-6 text-center">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-white/20 bg-white/10 backdrop-blur">
+            <Zap size={25} className="text-white" />
+          </div>
 
-          <p className="text-sm font-bold uppercase tracking-[0.25em] text-blue-100">
+          <p className="mt-6 text-xs font-bold uppercase tracking-[0.25em] text-white/80">
             Get Started
           </p>
 
-          <h2 className="mt-4 text-4xl font-extrabold sm:text-5xl">
+          <h2 className="mt-4 text-3xl font-black sm:text-5xl">
             Need a Professional Today?
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-blue-100">
+          <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/80 sm:text-lg">
             Book trusted professionals in just a few clicks.
             Fast, reliable, and convenient.
           </p>
 
           <Link
             to="/services"
-            className="mt-9 inline-flex rounded-xl bg-white px-8 py-4 font-bold text-blue-700 shadow-2xl transition hover:-translate-y-1 hover:bg-gray-100"
+            className="group mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-7 py-3.5 text-sm font-bold text-violet-700 shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:bg-slate-100 hover:shadow-white/20"
           >
-            Book a Service Now →
+            Book a Service Now
+
+            <ArrowRight
+              size={17}
+              className="transition-transform group-hover:translate-x-1"
+            />
           </Link>
-
         </div>
-
       </section>
 
-      {/* ================= FAQ ================= */}
+      {/* =========================================================
+          FAQ
+      ========================================================= */}
+      <section className="border-t border-white/5 bg-slate-900/70 px-5 py-20 sm:px-6 lg:px-8 lg:py-24">
 
-      <section className="border-t border-white/5 bg-[#070b15] py-20 lg:py-24">
+        <div className="mx-auto max-w-3xl">
 
-        <div className="mx-auto max-w-3xl px-6">
+          <div className="mb-12 text-center">
 
-          <div className="mb-14 text-center">
-
-            <p className="text-sm font-bold uppercase tracking-[0.25em] text-blue-400">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-fuchsia-400">
               Support
             </p>
 
-            <h2 className="mt-4 text-3xl font-extrabold sm:text-4xl">
+            <h2 className="mt-3 text-3xl font-black sm:text-4xl">
               Frequently Asked Questions
             </h2>
 
-            <p className="mt-4 text-gray-400">
-              Everything you need to know about booking with
-              Service Buddy.
+            <p className="mt-4 text-sm text-slate-400 sm:text-base">
+              Everything you need to know about booking with Service Buddy.
             </p>
-
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
 
-            {faqs.map((faq, index) => (
+            {faqs.map((faq, index) => {
+              const isOpen = openFaqIndex === index;
 
-              <div
-                key={index}
-                className="overflow-hidden rounded-2xl border border-white/10 bg-[#11141d] transition hover:border-blue-500/30"
-              >
-
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between px-6 py-5 text-left text-lg font-semibold text-white"
-                  onClick={() => toggleFaq(index)}
-                  aria-expanded={openFaqIndex === index}
-                >
-
-                  <span>
-                    {faq.question}
-                  </span>
-
-                  <span className="ml-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-500/10 text-xl font-normal text-blue-400">
-                    {openFaqIndex === index
-                      ? "−"
-                      : "+"}
-                  </span>
-
-                </button>
-
+              return (
                 <div
-                  className={`grid transition-all duration-300 ${
-                    openFaqIndex === index
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0"
+                  key={faq.question}
+                  className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
+                    isOpen
+                      ? "border-fuchsia-500/30 bg-fuchsia-500/[0.04]"
+                      : "border-white/10 bg-white/[0.03] hover:border-fuchsia-500/20"
                   }`}
                 >
 
-                  <div className="overflow-hidden">
+                  <button
+                    type="button"
+                    className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left text-sm font-bold text-white sm:px-6 sm:text-base"
+                    onClick={() => toggleFaq(index)}
+                    aria-expanded={isOpen}
+                  >
+                    <span>{faq.question}</span>
 
-                    <p className="border-t border-white/5 px-6 pb-6 pt-5 leading-7 text-gray-400">
-                      {faq.answer}
-                    </p>
+                    <span
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
+                        isOpen
+                          ? "rotate-180 bg-gradient-to-r from-fuchsia-500 to-violet-500 text-white"
+                          : "bg-fuchsia-500/10 text-fuchsia-300"
+                      }`}
+                    >
+                      <ChevronDown size={17} />
+                    </span>
+                  </button>
 
+                  <div
+                    className={`grid transition-all duration-300 ${
+                      isOpen
+                        ? "grid-rows-[1fr] opacity-100"
+                        : "grid-rows-[0fr] opacity-0"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+
+                      <p className="border-t border-white/5 px-5 pb-5 pt-4 text-sm leading-7 text-slate-400 sm:px-6">
+                        {faq.answer}
+                      </p>
+
+                    </div>
                   </div>
-
                 </div>
-
-              </div>
-
-            ))}
-
+              );
+            })}
           </div>
 
+          {/* Support */}
+          <div className="mt-8 flex flex-col items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.03] p-5 text-center sm:flex-row sm:text-left">
+
+            <div>
+              <p className="font-bold text-white">
+                Still have questions?
+              </p>
+
+              <p className="mt-1 text-sm text-slate-400">
+                Our team is ready to help you.
+              </p>
+            </div>
+
+            <Link
+              to="/contact"
+              className="inline-flex items-center gap-2 rounded-xl border border-fuchsia-500/20 bg-fuchsia-500/10 px-5 py-2.5 text-sm font-bold text-fuchsia-300 transition-all duration-300 hover:bg-gradient-to-r hover:from-fuchsia-500 hover:to-violet-500 hover:text-white"
+            >
+              <Mail size={16} />
+              Contact Us
+            </Link>
+          </div>
         </div>
-
       </section>
-
     </main>
   );
 };
